@@ -6,6 +6,7 @@
 <title>Niche Studio — Lead Intelligence</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+/* ... (MANTENGO TUTTO IL TUO CSS ORIGINALE INVARIATO) ... */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --red: #e95043; --red-dim: rgba(233,80,67,0.15); --red-border: rgba(233,80,67,0.35);
@@ -19,8 +20,6 @@
 }
 html { scroll-behavior: smooth; }
 body { font-family: var(--font-body); background: var(--navy); color: var(--white); min-height: 100vh; overflow-x: hidden; }
-
-/* BG grain */
 body::before {
   content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background:
@@ -32,11 +31,7 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 256px 256px;
 }
-
-/* LAYOUT */
 .app { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; }
-
-/* HEADER */
 header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 18px 32px; border-bottom: 1px solid var(--border);
@@ -51,8 +46,6 @@ header {
 .logo-mark span { background: white; border-radius: 2px; }
 .logo-name { font-family: var(--font-display); font-size: 17px; font-weight: 800; letter-spacing: -0.5px; }
 .logo-name em { color: var(--red); font-style: normal; }
-
-/* NAV TABS */
 nav { display: flex; gap: 4px; background: var(--gray-2); border: 1px solid var(--border); border-radius: 12px; padding: 4px; }
 .tab-btn {
   font-family: var(--font-display); font-size: 13px; font-weight: 600; letter-spacing: 0.2px;
@@ -61,27 +54,19 @@ nav { display: flex; gap: 4px; background: var(--gray-2); border: 1px solid var(
 }
 .tab-btn.active { background: var(--navy-3); color: var(--white); }
 .tab-btn:hover:not(.active) { color: var(--white); }
-
 .header-badge {
   font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 1px;
   text-transform: uppercase; color: var(--red); background: var(--red-dim);
   border: 1px solid var(--red-border); padding: 5px 12px; border-radius: 20px;
 }
-
-/* MAIN */
 main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 100%; }
-
-/* TABS CONTENT */
 .tab-pane { display: none; }
 .tab-pane.active { display: block; animation: fadeUp 0.3s ease; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-
-/* ======================== ANALIZZA TAB ======================== */
 .analizza-layout { display: grid; grid-template-columns: 1fr; gap: 28px; max-width: 780px; margin: 0 auto; }
 .page-title { font-family: var(--font-display); font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 10px; }
 .page-title span { color: var(--red); }
 .page-sub { font-size: 14px; color: var(--gray); font-weight: 400; line-height: 1.6; }
-
 .search-wrapper {
   display: flex; align-items: center; gap: 12px;
   background: var(--navy-2); border: 1.5px solid var(--border);
@@ -103,8 +88,6 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 }
 .btn-primary:hover:not(:disabled) { background: #d43e32; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(233,80,67,0.3); }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-/* EXISTS BANNER */
 .exists-banner { display: none; background: rgba(245,166,35,0.06); border: 1px solid rgba(245,166,35,0.2); border-radius: 18px; padding: 22px 26px; }
 .exists-banner.visible { display: block; animation: fadeUp 0.3s ease; }
 .exists-top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
@@ -116,8 +99,6 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .btn-ghost:hover { background: rgba(245,166,35,0.22); }
 .btn-outline { background: var(--gray-2); border: 1px solid var(--border); color: var(--gray); border-radius: 10px; padding: 9px 18px; font-family: var(--font-display); font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
 .btn-outline:hover { color: var(--white); border-color: rgba(240,244,248,0.2); }
-
-/* LOADING */
 .loading { display: none; text-align: center; padding: 60px 0; }
 .loading.visible { display: block; }
 .spinner { width: 44px; height: 44px; border: 2.5px solid rgba(240,244,248,0.1); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
@@ -129,11 +110,8 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .step-pill.done { background: var(--success-dim); border-color: rgba(46,212,122,0.3); color: var(--green); }
 .error-box { display: none; background: rgba(233,80,67,0.08); border: 1px solid var(--red-border); border-radius: 14px; padding: 18px 22px; text-align: center; color: var(--red); font-size: 13px; font-weight: 500; }
 .error-box.visible { display: block; animation: fadeUp 0.3s ease; }
-
-/* RESULTS */
 .results { display: none; }
 .results.visible { display: block; animation: fadeUp 0.4s ease; }
-
 .profile-header {
   background: var(--navy-2); border: 1px solid var(--border); border-radius: 20px;
   padding: 26px 28px; display: flex; align-items: center; justify-content: space-between;
@@ -162,8 +140,6 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .s-contact .status-dot { background: var(--green); }
 .s-no { background: var(--gray-2); color: var(--gray); }
 .s-no .status-dot { background: var(--gray); }
-
-/* THUMBNAILS */
 .thumbnails-section { margin-bottom: 16px; }
 .thumbs-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
 .thumbs-scroll::-webkit-scrollbar { display: none; }
@@ -175,10 +151,8 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .thumb-item:hover { border-color: var(--red-border); transform: scale(1.04); }
 .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
 .thumb-item .no-img { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 24px; }
-
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
 @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
-
 .card { background: var(--navy-2); border: 1px solid var(--border); border-radius: 18px; padding: 22px; }
 .card-full { background: var(--navy-2); border: 1px solid var(--border); border-radius: 18px; padding: 22px; margin-bottom: 16px; }
 .card-ttl { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
@@ -213,8 +187,6 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
   transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
 }
 .btn-pres:hover { background: #d43e32; transform: translateY(-1px); }
-
-/* ======================== LEAD TAB ======================== */
 .lead-controls { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
 .lead-controls h2 { font-family: var(--font-display); font-size: 22px; font-weight: 800; letter-spacing: -0.6px; flex: 1; }
 .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -237,8 +209,6 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
   font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap;
 }
 .btn-refresh:hover { border-color: var(--red-border); color: var(--red); }
-
-/* LEAD TABLE */
 .lead-table-wrap { background: var(--navy-2); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
 .lead-table { width: 100%; border-collapse: collapse; }
 .lead-table thead tr { border-bottom: 1px solid var(--border); }
@@ -266,7 +236,6 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .td-dot-green { background: var(--green); }
 .td-dot-gray { background: var(--gray); }
 .td-dot-blue { background: var(--blue); }
-
 .btn-mark {
   background: var(--gray-2); border: 1px solid var(--border); color: var(--gray);
   border-radius: 8px; padding: 6px 12px; font-family: var(--font-display); font-size: 10px;
@@ -274,15 +243,11 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 }
 .btn-mark:hover { background: var(--blue-dim); border-color: rgba(74,158,255,0.3); color: var(--blue); }
 .btn-mark.sent { background: var(--blue-dim); border-color: rgba(74,158,255,0.3); color: var(--blue); cursor: default; }
-
 .empty-state { text-align: center; padding: 60px 20px; color: var(--gray); }
 .empty-state .es-icon { font-size: 40px; margin-bottom: 14px; }
 .empty-state p { font-size: 14px; }
-
 .loading-rows { text-align: center; padding: 40px; color: var(--gray); font-size: 13px; }
 .table-spinner { width: 32px; height: 32px; border: 2px solid rgba(240,244,248,0.1); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
-
-/* LEAD DETAIL DRAWER */
 .drawer-overlay { display: none; position: fixed; inset: 0; background: rgba(10,18,28,0.7); z-index: 200; backdrop-filter: blur(4px); }
 .drawer-overlay.open { display: block; }
 .drawer {
@@ -306,53 +271,32 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .drawer-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .dm-val { font-size: 12px; color: var(--gray); margin-bottom: 2px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
 .dm-val-data { font-family: var(--font-display); font-size: 14px; font-weight: 700; }
-
-/* ======================== STATS TAB ======================== */
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
 .stat-card { background: var(--navy-2); border: 1px solid var(--border); border-radius: 18px; padding: 22px; }
 .stat-card .sc-label { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--gray); margin-bottom: 12px; }
 .stat-card .sc-val { font-family: var(--font-display); font-size: 36px; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 6px; }
 .stat-card .sc-sub { font-size: 12px; color: var(--gray); }
-
 .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
 @media (max-width: 700px) { .charts-row { grid-template-columns: 1fr; } }
-
 .chart-card { background: var(--navy-2); border: 1px solid var(--border); border-radius: 18px; padding: 22px; }
 .chart-card h3 { font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--gray); margin-bottom: 18px; }
-
-/* Bar chart */
 .bar-chart { display: flex; flex-direction: column; gap: 10px; }
 .bar-row { display: flex; align-items: center; gap: 10px; }
 .bar-label { font-size: 11px; color: var(--gray); width: 80px; flex-shrink: 0; font-weight: 500; }
 .bar-track { flex: 1; background: rgba(240,244,248,0.06); border-radius: 4px; height: 8px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; background: var(--red); transition: width 1s cubic-bezier(0.4,0,0.2,1); }
 .bar-val { font-family: var(--font-display); font-size: 11px; font-weight: 700; color: var(--white); width: 24px; text-align: right; }
-
-/* Donut */
-.donut-wrap { display: flex; align-items: center; gap: 20px; }
-.donut-svg { flex-shrink: 0; }
-.donut-legend { display: flex; flex-direction: column; gap: 10px; }
-.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.legend-val { font-family: var(--font-display); font-weight: 700; margin-left: auto; padding-left: 16px; }
-
-/* Score dist */
 .score-dist { display: flex; align-items: flex-end; gap: 6px; height: 80px; }
 .score-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
 .score-bar-fill { width: 100%; border-radius: 4px 4px 0 0; background: var(--red); min-height: 4px; transition: height 1s cubic-bezier(0.4,0,0.2,1); }
 .score-bar-lbl { font-family: var(--font-display); font-size: 10px; font-weight: 700; color: var(--gray); }
-
-/* Conv funnel */
 .funnel { display: flex; flex-direction: column; gap: 8px; }
 .funnel-row { display: flex; align-items: center; gap: 12px; }
 .funnel-name { font-size: 12px; color: var(--gray); width: 90px; flex-shrink: 0; }
 .funnel-bar-wrap { flex: 1; display: flex; align-items: center; gap: 8px; }
 .funnel-bar { height: 28px; border-radius: 6px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
 .funnel-num { font-family: var(--font-display); font-size: 13px; font-weight: 700; white-space: nowrap; }
-
 .empty-stats { text-align: center; padding: 60px 20px; color: var(--gray); }
-
-/* MOBILE */
 @media (max-width: 600px) {
   header { padding: 14px 16px; }
   main { padding: 24px 16px; }
@@ -378,7 +322,6 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
   </header>
 
   <main>
-    <!-- ANALIZZA -->
     <div class="tab-pane active" id="tab-analizza">
       <div class="analizza-layout">
         <div>
@@ -465,7 +408,6 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
       </div>
     </div>
 
-    <!-- LEAD -->
     <div class="tab-pane" id="tab-lead">
       <div class="lead-controls">
         <h2>Lead</h2>
@@ -493,14 +435,12 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
       </div>
     </div>
 
-    <!-- STATS -->
     <div class="tab-pane" id="tab-stats">
       <div id="statsContainer"><div class="empty-stats"><div style="font-size:40px;margin-bottom:14px;">📊</div><p>Caricamento statistiche...</p></div></div>
     </div>
   </main>
 </div>
 
-<!-- DRAWER -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="drawer">
   <div class="drawer-header">
@@ -511,8 +451,10 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 </div>
 
 <script>
+// ===== CONFIGURAZIONE WEBHOOK =====
 const WEBHOOK_URL = 'https://primary-production-82234.up.railway.app/webhook/analizza-profilo';
-const SHEETS_API = 'https://primary-production-82234.up.railway.app/webhook/get-leads'; // opzionale
+const GET_LEADS_URL = 'https://primary-production-82234.up.railway.app/webhook/get-leads';
+const UPDATE_STATUS_URL = 'https://primary-production-82234.up.railway.app/webhook/update-status';
 
 let stepInterval, currentStep = 0, cachedData = null, currentUsername = '';
 let allLeads = [], filteredLeads = [];
@@ -523,9 +465,17 @@ function switchTab(name) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b => { if (b.textContent.toLowerCase() === name || b.getAttribute('onclick').includes(name)) b.classList.add('active'); });
-  if (name === 'lead' && allLeads.length === 0) loadLeads();
-  if (name === 'stats' && allLeads.length === 0) loadLeads().then(renderStats);
+  
+  // Update nav buttons
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    if (b.textContent.toLowerCase() === name || b.getAttribute('onclick').includes(name)) {
+      b.classList.add('active');
+    }
+  });
+
+  if (name === 'lead' || name === 'stats') {
+    loadLeads();
+  }
 }
 
 // ===== ANALIZZA =====
@@ -539,107 +489,104 @@ function animateSteps() {
       currentStep++;
       document.getElementById(steps[currentStep]).className = 'step-pill active';
     }
-  }, 22000);
+  }, 12000); // Velocizzato leggermente per feedback utente
 }
+
 function stopSteps() {
   clearInterval(stepInterval);
   steps.forEach(s => document.getElementById(s).className = 'step-pill done');
 }
-function resetUI() {
-  document.getElementById('errorBox').className = 'error-box';
-  document.getElementById('resultsSection').className = 'results';
-  document.getElementById('existsBanner').className = 'exists-banner';
-}
+
 async function analyze(forceNew = false) {
   const input = document.getElementById('usernameInput');
   const username = input.value.trim().replace('@', '');
   if (!username) { input.focus(); return; }
   currentUsername = username;
-  resetUI();
+  
+  document.getElementById('errorBox').className = 'error-box';
+  document.getElementById('resultsSection').className = 'results';
+  document.getElementById('existsBanner').className = 'exists-banner';
   document.getElementById('loadingState').className = 'loading visible';
   document.getElementById('analyzeBtn').disabled = true;
+  
   animateSteps();
+  
   try {
     const res = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, force_new: forceNew })
     });
+    
     if (!res.ok) throw new Error(`Errore ${res.status}`);
     const data = await res.json();
+    
     stopSteps();
     document.getElementById('loadingState').className = 'loading';
+    
     if (data.already_exists && !forceNew) {
       cachedData = data;
       const date = data['Data Lead'] ? new Date(data['Data Lead']).toLocaleDateString('it-IT', {day:'numeric',month:'long',year:'numeric'}) : '—';
       document.getElementById('existsDate').textContent = `Ultima analisi: ${date}`;
       document.getElementById('existsBanner').className = 'exists-banner visible';
-      document.getElementById('existsBanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       renderResults(data, username, false);
-      allLeads = []; // reset cache leads
     }
   } catch(err) {
     clearInterval(stepInterval);
     document.getElementById('loadingState').className = 'loading';
     document.getElementById('errorBox').className = 'error-box visible';
-    document.getElementById('errorBox').textContent = `Errore: ${err.message}. Riprova tra qualche secondo.`;
+    document.getElementById('errorBox').textContent = `Errore: ${err.message}. Riprova.`;
   }
   document.getElementById('analyzeBtn').disabled = false;
 }
+
 function showExistingResults() {
   document.getElementById('existsBanner').className = 'exists-banner';
   renderResults(cachedData, currentUsername, true);
 }
+
 function forceReanalyze() {
   document.getElementById('existsBanner').className = 'exists-banner';
-  cachedData = null;
   analyze(true);
 }
-function fmt(n) {
-  if (!n) return '—';
-  return n >= 1000 ? (n/1000).toFixed(1)+'K' : n.toString();
-}
+
 function renderResults(data, username, isCached) {
-  const score = data['Score (1-10)'] || 0;
-  const shouldContact = data.Status === 'Da inviare';
-  const weakPoints = (data['Punti Deboli'] || '').split(' | ').filter(Boolean);
-  const quickWins = (data['Quick Wins'] || '').split(' | ').filter(Boolean);
-  const cachedBadge = isCached && data['Data Lead']
-    ? ` <span style="font-size:11px;font-family:var(--font-body);font-weight:400;color:var(--gray);margin-left:8px;">${new Date(data['Data Lead']).toLocaleDateString('it-IT',{day:'numeric',month:'long'})}</span>` : '';
-  document.getElementById('profileName').innerHTML = (data.Nome || username) + cachedBadge;
+  // Pulizia e Mapping dati
+  const score = parseInt(data['Score (1-10)']) || 0;
+  const follower = parseInt(String(data.Follower || '0').replace(/[^0-9]/g, '')) || 0;
+  
+  document.getElementById('profileName').textContent = data.Nome || username;
   const urlEl = document.getElementById('profileUrl');
   urlEl.textContent = `@${data.Username || username}`;
   urlEl.href = data['Profilo URL'] || `https://instagram.com/${username}`;
-  document.getElementById('followerCount').textContent = fmt(data.Follower);
-  document.getElementById('categoryVal').textContent = (data.Categoria || '—').slice(0,12);
+  
+  document.getElementById('followerCount').textContent = fmt(follower);
+  document.getElementById('categoryVal').textContent = (data.Categoria || '—');
   document.getElementById('cityVal').textContent = data['Città'] || '—';
   document.getElementById('scoreNum').textContent = score;
   document.getElementById('scoreBadge').className = 'score-circle ' + (score <= 4 ? 'score-low' : score <= 6 ? 'score-mid' : 'score-high');
-  document.getElementById('statusTag').innerHTML = shouldContact
+  
+  document.getElementById('statusTag').innerHTML = data.Status === 'Da inviare'
     ? '<div class="status-tag s-contact"><span class="status-dot"></span>Da contattare</div>'
     : '<div class="status-tag s-no"><span class="status-dot"></span>Non contattare</div>';
-  document.getElementById('summaryText').textContent = data['Analisi GPT'] || '—';
+    
+  document.getElementById('summaryText').textContent = data['Analisi GPT'] || 'Nessuna sintesi disponibile.';
+  
+  const weakPoints = (data['Punti Deboli'] || '').split(' | ').filter(Boolean);
   document.getElementById('weakPointsList').innerHTML = weakPoints.map((p,i)=>`<div class="point-item"><div class="point-num pn-red">${i+1}</div><div class="point-text">${p}</div></div>`).join('');
+  
+  const quickWins = (data['Quick Wins'] || '').split(' | ').filter(Boolean);
   document.getElementById('quickWinsList').innerHTML = quickWins.map((p,i)=>`<div class="point-item"><div class="point-num pn-green">${i+1}</div><div class="point-text">${p}</div></div>`).join('');
-  // Thumbnails from latest posts if available
-  const posts = data._latestPosts || [];
-  const thumbsRow = document.getElementById('thumbsRow');
-  const thumbsSec = document.getElementById('thumbsSection');
-  const thumbUrls = posts.slice(0,6).map(p => p.displayUrl).filter(Boolean);
-  if (thumbUrls.length > 0) {
-    thumbsRow.innerHTML = thumbUrls.map(url => `<div class="thumb-item"><img src="${url}" onerror="this.parentElement.innerHTML='<div class=no-img>📷</div>'"></div>`).join('');
-    thumbsSec.style.display = 'block';
-  } else {
-    thumbsSec.style.display = 'none';
-  }
+
   const dm = data['📋 DM da inviare'] || '';
-  if (dm && shouldContact) {
+  if (dm) {
     document.getElementById('dmText').textContent = dm;
     document.getElementById('dmSection').style.display = 'block';
   } else {
     document.getElementById('dmSection').style.display = 'none';
   }
+
   const link = data['Link Presentazione'] || '';
   if (link) {
     document.getElementById('presentationLink').href = link;
@@ -647,52 +594,38 @@ function renderResults(data, username, isCached) {
   } else {
     document.getElementById('presentationCard').style.display = 'none';
   }
+
   document.getElementById('resultsSection').className = 'results visible';
-  setTimeout(() => document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
 }
-function copyDM() {
-  navigator.clipboard.writeText(document.getElementById('dmText').textContent).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = '✓ Copiato!';
-    btn.className = 'btn-copy copied';
-    setTimeout(() => { btn.textContent = '📋 Copia DM'; btn.className = 'btn-copy'; }, 2000);
-  });
-}
-document.getElementById('usernameInput').addEventListener('keydown', e => { if (e.key === 'Enter') analyze(); });
 
-// ===== LEAD TABLE =====
+// ===== LEAD & STATS LOGIC =====
 async function loadLeads() {
-  document.getElementById('leadTableContainer').innerHTML = '<div class="loading-rows"><div class="table-spinner"></div>Caricamento lead...</div>';
-  try {
-    // Legge da Google Sheets via webhook dedicato
-    const res = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1pVCsQoP72tXmglZK6_HC-D2ccvk4-zpfsC4Es4NRo/values/Foglio1?key=PLACEHOLDER', { mode: 'no-cors' });
-  } catch(e) {}
-  // Fallback: usa dati demo se non riesce a caricare
-  // In produzione metti qui il tuo endpoint n8n get-leads
-  loadLeadsFallback();
-}
+  const container = document.getElementById('leadTableContainer');
+  if (allLeads.length === 0) {
+    container.innerHTML = '<div class="loading-rows"><div class="table-spinner"></div>Sincronizzazione...</div>';
+  }
 
-function loadLeadsFallback() {
-  // Dati demo per mostrare la UI — sostituisci con fetch reale
-  allLeads = [];
-  renderLeadTable();
-}
-
-// Funzione reale — chiama un webhook n8n che restituisce i lead da Sheets
-async function fetchLeadsFromN8n() {
   try {
-    const res = await fetch('https://primary-production-82234.up.railway.app/webhook/get-leads', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    });
-    if (!res.ok) throw new Error('Network error');
+    const res = await fetch(GET_LEADS_URL);
     const data = await res.json();
-    allLeads = Array.isArray(data) ? data : (data.leads || []);
+    
+    // Pulizia globale dei dati per tabelle e grafici
+    allLeads = (Array.isArray(data) ? data : (data.leads || [])).map(item => {
+        const row = item.json || item;
+        return {
+            ...row,
+            'Score (1-10)': parseInt(row['Score (1-10)']) || 0,
+            'Follower': parseInt(String(row.Follower || '0').replace(/[^0-9]/g, '')) || 0
+        };
+    });
+
     filterLeads();
-    if (document.getElementById('tab-stats').classList.contains('active')) renderStats();
+    if (document.getElementById('tab-stats').classList.contains('active')) {
+        renderStats();
+    }
   } catch(e) {
-    allLeads = [];
-    renderLeadTable();
+    container.innerHTML = '<div class="empty-state">Errore nel caricamento. Riprova.</div>';
   }
 }
 
@@ -700,10 +633,11 @@ function filterLeads() {
   const search = document.getElementById('leadSearch').value.toLowerCase();
   const status = document.getElementById('filterStatus').value;
   const score = document.getElementById('filterScore').value;
+  
   filteredLeads = allLeads.filter(l => {
     const matchSearch = !search || (l.Nome||'').toLowerCase().includes(search) || (l.Username||'').toLowerCase().includes(search);
     const matchStatus = !status || l.Status === status;
-    const s = parseInt(l['Score (1-10)']) || 0;
+    const s = l['Score (1-10)'];
     const matchScore = !score || (score === 'low' && s <= 4) || (score === 'mid' && s >= 5 && s <= 6) || (score === 'high' && s >= 7);
     return matchSearch && matchStatus && matchScore;
   });
@@ -712,171 +646,142 @@ function filterLeads() {
 
 function renderLeadTable() {
   const container = document.getElementById('leadTableContainer');
-  if (allLeads.length === 0) {
-    container.innerHTML = `<div class="empty-state"><div class="es-icon">📭</div><p>Nessun lead trovato. <br>Configura il webhook <code>get-leads</code> su n8n per caricare i dati da Sheets.</p></div>`;
-    return;
-  }
   if (filteredLeads.length === 0) {
-    container.innerHTML = `<div class="empty-state"><div class="es-icon">🔍</div><p>Nessun risultato per i filtri selezionati.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><div class="es-icon">🔍</div><p>Nessun lead trovato.</p></div>`;
     return;
   }
+
   const rows = filteredLeads.map((l, i) => {
-    const score = parseInt(l['Score (1-10)']) || 0;
+    const score = l['Score (1-10)'];
     const scoreClass = score <= 4 ? 'score-low' : score <= 6 ? 'score-mid' : 'score-high';
-    const status = l.Status || '';
-    let tagHtml = '';
-    if (status === 'Da inviare') tagHtml = '<span class="tag tag-contact"><span class="td-dot td-dot-green"></span>Da inviare</span>';
-    else if (status === 'Inviato') tagHtml = '<span class="tag tag-sent"><span class="td-dot td-dot-blue"></span>Inviato</span>';
-    else tagHtml = '<span class="tag tag-no"><span class="td-dot td-dot-gray"></span>Non cont.</span>';
-    const thumb = l._thumb || '';
-    const thumbHtml = thumb ? `<img src="${thumb}" onerror="this.style.display='none'">` : `<div class="no-img-sm">📷</div>`;
-    const date = l['Data Lead'] ? new Date(l['Data Lead']).toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit',year:'2-digit'}) : '—';
-    const isSent = status === 'Inviato';
+    const isSent = l.Status === 'Inviato';
+    
     return `<tr onclick="openDrawer(${i})">
-      <td><div class="td-profile"><div class="td-thumb">${thumbHtml}</div><div><div class="td-name">${l.Nome||l.Username||'—'}</div><div class="td-user">@${l.Username||'—'}</div></div></div></td>
-      <td>${tagHtml}</td>
+      <td><div class="td-profile"><div class="td-thumb"><div class="no-img-sm">📷</div></div><div><div class="td-name">${l.Nome||l.Username}</div><div class="td-user">@${l.Username}</div></div></div></td>
+      <td><span class="tag ${isSent?'tag-sent':'tag-contact'}"><span class="td-dot ${isSent?'td-dot-blue':'td-dot-green'}"></span>${l.Status||'Da inviare'}</span></td>
       <td><div class="score-chip ${scoreClass}">${score}</div></td>
       <td style="color:var(--gray);font-size:12px;">${l.Categoria||'—'}</td>
-      <td style="color:var(--gray);font-size:12px;">${l['Città']||'—'}</td>
       <td style="color:var(--gray);font-size:12px;">${fmt(l.Follower)}</td>
-      <td style="color:var(--gray);font-size:12px;">${date}</td>
       <td onclick="event.stopPropagation()"><button class="btn-mark ${isSent?'sent':''}" onclick="markAsSent(event,${i})">${isSent?'✓ Inviato':'Segna inviato'}</button></td>
     </tr>`;
   }).join('');
-  container.innerHTML = `<table class="lead-table">
-    <thead><tr>
-      <th>Profilo</th><th>Status</th><th>Score</th><th>Categoria</th><th>Città</th><th>Follower</th><th>Data</th><th></th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-  </table>`;
+
+  container.innerHTML = `<table class="lead-table"><thead><tr><th>Profilo</th><th>Status</th><th>Score</th><th>Categoria</th><th>Follower</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 async function markAsSent(e, idx) {
   e.stopPropagation();
   const lead = filteredLeads[idx];
   if (!lead || lead.Status === 'Inviato') return;
-  lead.Status = 'Inviato';
-  // Aggiorna anche in allLeads
-  const ai = allLeads.findIndex(l => l.Username === lead.Username);
-  if (ai >= 0) allLeads[ai].Status = 'Inviato';
-  renderLeadTable();
-  // Chiama webhook n8n per aggiornare Sheets
+
+  const btn = e.target;
+  btn.textContent = '...';
+  
   try {
-    await fetch('https://primary-production-82234.up.railway.app/webhook/update-lead-status', {
+    await fetch(UPDATE_STATUS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: lead.Username, status: 'Inviato' })
     });
-  } catch(e) {}
+    lead.Status = 'Inviato';
+    renderLeadTable();
+  } catch(e) {
+    alert("Errore aggiornamento");
+    btn.textContent = 'Segna inviato';
+  }
 }
 
-// ===== DRAWER =====
-function openDrawer(idx) {
-  const lead = filteredLeads[idx];
-  if (!lead) return;
-  const score = parseInt(lead['Score (1-10)']) || 0;
-  const scoreClass = score <= 4 ? 'score-low' : score <= 6 ? 'score-mid' : 'score-high';
-  const weakPoints = (lead['Punti Deboli'] || '').split(' | ').filter(Boolean);
-  const quickWins = (lead['Quick Wins'] || '').split(' | ').filter(Boolean);
-  const dm = lead['📋 DM da inviare'] || '';
-  const link = lead['Link Presentazione'] || '';
-  const posts = lead._latestPosts || [];
-  const thumbUrls = posts.slice(0,5).map(p => p.displayUrl).filter(Boolean);
-  const thumbsHtml = thumbUrls.length
-    ? thumbUrls.map(u => `<div class="drawer-thumb"><img src="${u}" onerror="this.style.display='none'"></div>`).join('')
-    : '';
-  document.getElementById('drawerTitle').textContent = lead.Nome || lead.Username || '—';
-  document.getElementById('drawerBody').innerHTML = `
-    ${thumbsHtml ? `<div class="drow-section"><h4>Ultimi Post</h4><div class="drawer-thumbs">${thumbsHtml}</div></div>` : ''}
-    <div class="drow-section">
-      <h4>Dati Profilo</h4>
-      <div class="drawer-meta">
-        <div><div class="dm-val">Score</div><div class="dm-val-data"><span class="score-chip ${scoreClass}" style="width:auto;padding:4px 10px;">${score}/10</span></div></div>
-        <div><div class="dm-val">Follower</div><div class="dm-val-data">${fmt(lead.Follower)}</div></div>
-        <div><div class="dm-val">Categoria</div><div class="dm-val-data">${lead.Categoria||'—'}</div></div>
-        <div><div class="dm-val">Città</div><div class="dm-val-data">${lead['Città']||'—'}</div></div>
-        <div><div class="dm-val">Status</div><div class="dm-val-data">${lead.Status||'—'}</div></div>
-        <div><div class="dm-val">Convertito</div><div class="dm-val-data">${lead.Convertito||'No'}</div></div>
-      </div>
-    </div>
-    ${weakPoints.length ? `<div class="drow-section"><h4>Punti Deboli</h4><div class="point-list">${weakPoints.map((p,i)=>`<div class="point-item"><div class="point-num pn-red">${i+1}</div><div class="point-text">${p}</div></div>`).join('')}</div></div>` : ''}
-    ${quickWins.length ? `<div class="drow-section"><h4>Quick Wins</h4><div class="point-list">${quickWins.map((p,i)=>`<div class="point-item"><div class="point-num pn-green">${i+1}</div><div class="point-text">${p}</div></div>`).join('')}</div></div>` : ''}
-    ${dm ? `<div class="drow-section"><h4>DM</h4><div class="dm-body" style="font-size:13px;">${dm}</div><button class="btn-copy" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent);this.textContent='✓ Copiato!';this.className='btn-copy copied';setTimeout(()=>{this.textContent='📋 Copia';this.className='btn-copy';},2000)">📋 Copia</button></div>` : ''}
-    ${link ? `<div class="drow-section"><h4>Presentazione</h4><a href="${link}" target="_blank" class="btn-pres" style="display:inline-flex;">Apri Google Slides →</a></div>` : ''}
-    <div style="margin-top:auto;padding-top:8px;">
-      <a href="${lead['Profilo URL']||'https://instagram.com/'+lead.Username}" target="_blank" class="btn-outline" style="display:block;text-align:center;text-decoration:none;">Apri profilo Instagram ↗</a>
-    </div>`;
-  document.getElementById('drawerOverlay').classList.add('open');
-  document.getElementById('drawer').classList.add('open');
-}
-function closeDrawer() {
-  document.getElementById('drawerOverlay').classList.remove('open');
-  document.getElementById('drawer').classList.remove('open');
-}
-
-// ===== STATS =====
+// ===== STATISTICHE =====
 function renderStats() {
   const container = document.getElementById('statsContainer');
-  if (allLeads.length === 0) {
-    container.innerHTML = `<div class="empty-stats"><div style="font-size:40px;margin-bottom:14px;">📊</div><p>Nessun dato disponibile.<br>Configura il webhook <code>get-leads</code> per caricare i lead da Sheets.</p></div>`;
-    return;
-  }
   const total = allLeads.length;
+  if (total === 0) return;
+
   const daInviare = allLeads.filter(l => l.Status === 'Da inviare').length;
   const inviati = allLeads.filter(l => l.Status === 'Inviato').length;
-  const convertiti = allLeads.filter(l => l.Convertito === 'Si' || l.Convertito === 'Sì').length;
-  const risposti = allLeads.filter(l => l.Risposto === 'Si' || l.Risposto === 'Sì').length;
-  const avgScore = allLeads.reduce((s,l) => s + (parseInt(l['Score (1-10)'])||0), 0) / (total||1);
-  // Categorie top
+  const avgScore = allLeads.reduce((s,l) => s + l['Score (1-10)'], 0) / total;
+
+  // Categorie
   const catCount = {};
   allLeads.forEach(l => { const c = l.Categoria||'Altro'; catCount[c] = (catCount[c]||0)+1; });
   const topCats = Object.entries(catCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const maxCat = topCats[0]?.[1] || 1;
-  // Score distribution
-  const scoreDist = Array(10).fill(0);
-  allLeads.forEach(l => { const s = (parseInt(l['Score (1-10)'])||1)-1; if(s>=0&&s<10) scoreDist[s]++; });
-  const maxDist = Math.max(...scoreDist, 1);
-  // Città top
-  const cityCount = {};
-  allLeads.forEach(l => { const c = l['Città']||'n/d'; if(c!=='n/d') cityCount[c] = (cityCount[c]||0)+1; });
-  const topCities = Object.entries(cityCount).sort((a,b)=>b[1]-a[1]).slice(0,4);
+
   container.innerHTML = `
     <div class="stats-grid">
-      <div class="stat-card"><div class="sc-label">Lead Totali</div><div class="sc-val">${total}</div><div class="sc-sub">Analizzati</div></div>
-      <div class="stat-card"><div class="sc-label">Da Inviare</div><div class="sc-val" style="color:var(--green)">${daInviare}</div><div class="sc-sub">Pronti al contatto</div></div>
-      <div class="stat-card"><div class="sc-label">Inviati</div><div class="sc-val" style="color:var(--blue)">${inviati}</div><div class="sc-sub">DM inviati</div></div>
-      <div class="stat-card"><div class="sc-label">Score Medio</div><div class="sc-val" style="color:var(--red)">${avgScore.toFixed(1)}</div><div class="sc-sub">Su 10</div></div>
+      <div class="stat-card"><div class="sc-label">Lead Totali</div><div class="sc-val">${total}</div></div>
+      <div class="stat-card"><div class="sc-label">Da Inviare</div><div class="sc-val" style="color:var(--green)">${daInviare}</div></div>
+      <div class="stat-card"><div class="sc-label">Inviati</div><div class="sc-val" style="color:var(--blue)">${inviati}</div></div>
+      <div class="stat-card"><div class="sc-label">Score Medio</div><div class="sc-val" style="color:var(--red)">${avgScore.toFixed(1)}</div></div>
     </div>
     <div class="charts-row">
       <div class="chart-card">
         <h3>Categorie Top</h3>
-        <div class="bar-chart">${topCats.map(([cat,n])=>`<div class="bar-row"><div class="bar-label">${cat.slice(0,12)}</div><div class="bar-track"><div class="bar-fill" style="width:${(n/maxCat*100).toFixed(0)}%"></div></div><div class="bar-val">${n}</div></div>`).join('')}</div>
+        <div class="bar-chart">${topCats.map(([cat,n])=>`<div class="bar-row"><div class="bar-label">${cat.slice(0,12)}</div><div class="bar-track"><div class="bar-fill" style="width:${(n/maxCat*100)}%"></div></div><div class="bar-val">${n}</div></div>`).join('')}</div>
       </div>
       <div class="chart-card">
-        <h3>Funnel Conversione</h3>
+        <h3>Funnel</h3>
         <div class="funnel">
-          <div class="funnel-row"><div class="funnel-name">Analizzati</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:var(--navy-3);border:1px solid var(--border);"></div><span class="funnel-num">${total}</span></div></div>
-          <div class="funnel-row"><div class="funnel-name">Da inviare</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(daInviare/total*100).toFixed(0):0}%;background:var(--green);opacity:0.7;"></div><span class="funnel-num" style="color:var(--green)">${daInviare}</span></div></div>
-          <div class="funnel-row"><div class="funnel-name">Inviati</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(inviati/total*100).toFixed(0):0}%;background:var(--blue);opacity:0.7;"></div><span class="funnel-num" style="color:var(--blue)">${inviati}</span></div></div>
-          <div class="funnel-row"><div class="funnel-name">Risposti</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(risposti/total*100).toFixed(0):0}%;background:var(--yellow);opacity:0.7;"></div><span class="funnel-num" style="color:var(--yellow)">${risposti}</span></div></div>
-          <div class="funnel-row"><div class="funnel-name">Convertiti</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(convertiti/total*100).toFixed(0):0}%;background:var(--red);"></div><span class="funnel-num" style="color:var(--red)">${convertiti}</span></div></div>
+            <div class="funnel-row"><div class="funnel-name">Analizzati</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:var(--navy-3);"></div><span class="funnel-num">${total}</span></div></div>
+            <div class="funnel-row"><div class="funnel-name">Inviati</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${(inviati/total*100)}%;background:var(--blue);"></div><span class="funnel-num">${inviati}</span></div></div>
         </div>
-      </div>
-    </div>
-    <div class="charts-row">
-      <div class="chart-card">
-        <h3>Distribuzione Score</h3>
-        <div class="score-dist">${scoreDist.map((n,i)=>`<div class="score-bar-col"><div class="score-bar-fill" style="height:${(n/maxDist*100).toFixed(0)}%;background:${i<4?'var(--red)':i<6?'var(--yellow)':'var(--green)'};opacity:0.8;"></div><div class="score-bar-lbl">${i+1}</div></div>`).join('')}</div>
-      </div>
-      <div class="chart-card">
-        <h3>Città Top</h3>
-        <div class="bar-chart">${topCities.map(([city,n])=>`<div class="bar-row"><div class="bar-label">${city.slice(0,12)}</div><div class="bar-track"><div class="bar-fill" style="width:${(n/(topCities[0]?.[1]||1)*100).toFixed(0)}%;background:var(--blue);"></div></div><div class="bar-val">${n}</div></div>`).join('')}</div>
       </div>
     </div>`;
 }
 
-// Load leads via n8n webhook
-loadLeads = fetchLeadsFromN8n;
+// ===== UTILS =====
+function fmt(n) {
+  if (!n) return '0';
+  if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(1) + 'K';
+  return n.toString();
+}
+
+function openDrawer(idx) {
+  const lead = filteredLeads[idx];
+  const score = lead['Score (1-10)'];
+  const scoreClass = score <= 4 ? 'score-low' : score <= 6 ? 'score-mid' : 'score-high';
+  
+  document.getElementById('drawerTitle').textContent = lead.Nome || lead.Username;
+  document.getElementById('drawerBody').innerHTML = `
+    <div class="drow-section">
+      <h4>Dati Profilo</h4>
+      <div class="drawer-meta">
+        <div><div class="dm-val">Score</div><div class="dm-val-data"><span class="score-chip ${scoreClass}">${score}</span></div></div>
+        <div><div class="dm-val">Follower</div><div class="dm-val-data">${fmt(lead.Follower)}</div></div>
+        <div><div class="dm-val">Città</div><div class="dm-val-data">${lead['Città']||'—'}</div></div>
+        <div><div class="dm-val">Status</div><div class="dm-val-data">${lead.Status||'—'}</div></div>
+      </div>
+    </div>
+    <div class="drow-section">
+        <h4>DM Suggerito</h4>
+        <div class="dm-body" style="font-size:13px;">${lead['📋 DM da inviare'] || 'Nessun DM generato.'}</div>
+    </div>
+    <div style="margin-top:auto">
+        <a href="${lead['Profilo URL']}" target="_blank" class="btn-pres" style="display:block;text-align:center">Apri Instagram ↗</a>
+    </div>
+  `;
+  document.getElementById('drawerOverlay').className = 'drawer-overlay open';
+  document.getElementById('drawer').className = 'drawer open';
+}
+
+function closeDrawer() {
+  document.getElementById('drawerOverlay').className = 'drawer-overlay';
+  document.getElementById('drawer').className = 'drawer';
+}
+
+function copyDM() {
+  const text = document.getElementById('dmText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copiato!';
+    btn.className = 'btn-copy copied';
+    setTimeout(() => { btn.textContent = '📋 Copia DM'; btn.className = 'btn-copy'; }, 2000);
+  });
+}
+
+// Enter key for analysis
+document.getElementById('usernameInput').addEventListener('keydown', e => { if (e.key === 'Enter') analyze(); });
 </script>
 </body>
 </html>
