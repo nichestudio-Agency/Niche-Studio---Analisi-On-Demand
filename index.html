@@ -837,16 +837,18 @@ function openDrawer(idx) {
     ${weakPoints.length ? `<div class="drow-section"><h4>Punti Deboli</h4><div class="point-list">${weakPoints.map((p,i)=>`<div class="point-item"><div class="point-num pn-red">${i+1}</div><div class="point-text">${p}</div></div>`).join('')}</div></div>` : ''}
     ${quickWins.length ? `<div class="drow-section"><h4>Quick Wins</h4><div class="point-list">${quickWins.map((p,i)=>`<div class="point-item"><div class="point-num pn-green">${i+1}</div><div class="point-text">${p}</div></div>`).join('')}</div></div>` : ''}
     ${dm ? `<div class="drow-section"><h4>DM</h4><div class="dm-body" style="font-size:13px;">${dm}</div><button class="btn-copy" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent);this.textContent='✓ Copiato!';this.className='btn-copy copied';setTimeout(()=>{this.textContent='📋 Copia';this.className='btn-copy';},2000)">📋 Copia</button></div>` : ''}
-    \${link ? `<div class="drow-section"><h4>Presentazione</h4><a href="\${link}" target="_blank" class="btn-pres" style="display:inline-flex;">Apri Google Slides →</a>
-      <div class="export-bar" style="margin-top:12px;">
-        <button class="btn-export pdf" id="drawerBtnPdf" onclick="drawerExport('pdf','\${lead.Username}')">&#128196; PDF</button>
-        <button class="btn-export jpeg" id="drawerBtnJpeg" onclick="drawerExport('jpeg','\${lead.Username}')">&#128247; JPEG</button>
+    <div class="drow-section">
+      <h4>Esporta Analisi</h4>
+      ${link ? `<a href="${link}" target="_blank" class="btn-pres" style="display:inline-flex;margin-bottom:12px;">Apri Google Slides →</a>` : ''}
+      <div class="export-bar">
+        <button class="btn-export pdf" onclick="drawerExport('pdf','${lead.Username}')">&#128196; PDF</button>
+        <button class="btn-export jpeg" onclick="drawerExport('jpeg','${lead.Username}')">&#128247; JPEG</button>
       </div>
       <div class="export-loading" id="drawerExportLoading" style="margin-top:10px;">
         <div class="export-spinner"></div>
         <span id="drawerExportText">Generazione...</span>
       </div>
-    </div>` : ''}
+    </div>
     <div style="margin-top:auto;padding-top:8px;">
       <a href="${lead['Profilo URL']||'https://instagram.com/'+lead.Username}" target="_blank" class="btn-outline" style="display:block;text-align:center;text-decoration:none;">Apri profilo Instagram ↗</a>
     </div>`;
