@@ -675,7 +675,7 @@ function switchTab(name) {
   document.getElementById('tab-' + name).classList.add('active');
   document.querySelectorAll('.tab-btn').forEach(b => { if (b.textContent.toLowerCase() === name || b.getAttribute('onclick').includes(name)) b.classList.add('active'); });
   if (name === 'lead' && allLeads.length === 0) loadLeads();
-  if (name === 'stats' && allLeads.length === 0) loadLeads().then(renderStats);
+  if (name === 'stats') { if (allLeads.length === 0) { loadLeads().then(() => renderStats()); } else { renderStats(); } }
 }
 
 // ===== ANALIZZA =====
@@ -889,6 +889,7 @@ async function fetchLeadsFromN8n() {
     allLeads = [];
     renderLeadTable();
   }
+  return allLeads;
 }
 
 function filterLeads() {
