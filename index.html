@@ -921,6 +921,65 @@ function renderStats() {
     </div>`;
 }
 
+
+// ===== EXPORT FUNCTIONS =====
+const EXPORT_WEBHOOK = 'https://primary-production-82234.up.railway.app/webhook/export-presentation';
+
+async function exportPresentation(type) {
+  const username = currentUsername;
+  if (!username) return;
+  const btnPdf = document.getElementById('btnExportPdf');
+  const btnJpeg = document.getElementById('btnExportJpeg');
+  const loadingEl = document.getElementById('exportLoading');
+  const loadingText = document.getElementById('exportLoadingText');
+  if (btnPdf) btnPdf.setAttribute('disabled', true);
+  if (btnJpeg) btnJpeg.setAttribute('disabled', true);
+  if (loadingEl) { loadingEl.classList.add('visible'); loadingText.textContent = 'Generazione in corso (30-60s)...'; }
+  try {
+    const res = await fetch(EXPORT_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || 'Errore export');
+    const url = type === 'pdf' ? data.pdf_url : data.jpeg_url;
+    window.open(url, '_blank');
+  } catch(err) {
+    alert('Errore: ' + err.message);
+  }
+  if (btnPdf) btnPdf.removeAttribute('disabled');
+  if (btnJpeg) btnJpeg.removeAttribute('disabled');
+  if (loadingEl) loadingEl.classList.remove('visible');
+}
+
+async function drawerExport(type, username) {
+  const loadingEl = document.getElementById('drawerExportLoading');
+  const loadingText = document.getElementById('drawerExportText');
+  document.querySelectorAll('#drawer .btn-export').forEach(b => b.setAttribute('disabled', true));
+  if (loadingEl) { loadingEl.classList.add('visible'); loadingText.textContent = 'Generazione (30-60s)...'; }
+  try {
+    const res = await fetch(EXPORT_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username })
+    });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error || 'Errore export');
+    const url = type === 'pdf' ? data.pdf_url : data.jpeg_url;
+    window.open(url, '_blank');
+  } catch(err) {
+    alert('Errore: ' + err.message);
+  }
+  document.querySelectorAll('#drawer .btn-export').forEach(b => b.removeAttribute('disabled'));
+  if (loadingEl) loadingEl.classList.remove('visible');
+}
+
+function showExportSection(show) {
+  const el = document.getElementById('exportSection');
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+
 // Load leads via n8n webhook
 loadLeads = fetchLeadsFromN8n;
 </script>
