@@ -1150,8 +1150,9 @@ let codaData = [];
 async function loadCoda() {
   try {
     const res = await fetch(CODA_API);
-    if (!res.ok) throw new Error('Network error');
-    const data = await res.json();
+    const text = await res.text();
+    let data = [];
+    try { data = JSON.parse(text); } catch(e) { data = []; }
     codaData = Array.isArray(data) ? data : (data.items || []);
     renderCoda();
   } catch(e) {
