@@ -958,7 +958,7 @@ async function markAsSent(e, idx) {
   renderLeadTable();
   // Chiama webhook n8n per aggiornare Sheets
   try {
-    await fetch('https://primary-production-82234.up.railway.app/webhook/update-lead-status', {
+    await fetch('https://primary-production-82234.up.railway.app/webhook/update-status', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: lead.Username, status: 'Inviato' })
