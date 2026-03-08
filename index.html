@@ -994,6 +994,7 @@ function openDrawer(idx) {
         <div><div class="dm-val">Convertito</div><div class="dm-val-data">${lead.Convertito||'No'}</div></div>
       </div>
     </div>
+    ${lead['Analisi GPT'] ? `<div class="drow-section"><h4>Sintesi Analisi</h4><p style="font-size:13px;color:rgba(240,244,248,0.72);line-height:1.75;">${lead['Analisi GPT']}</p></div>` : ''}
     ${weakPoints.length ? `<div class="drow-section"><h4>Punti Deboli</h4><div class="point-list">${weakPoints.map((p,i)=>`<div class="point-item"><div class="point-num pn-red">${i+1}</div><div class="point-text">${p}</div></div>`).join('')}</div></div>` : ''}
     ${quickWins.length ? `<div class="drow-section"><h4>Quick Wins</h4><div class="point-list">${quickWins.map((p,i)=>`<div class="point-item"><div class="point-num pn-green">${i+1}</div><div class="point-text">${p}</div></div>`).join('')}</div></div>` : ''}
     ${dm ? `<div class="drow-section"><h4>DM</h4><div class="dm-body" style="font-size:13px;">${dm}</div><button class="btn-copy" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent);this.textContent='✓ Copiato!';this.className='btn-copy copied';setTimeout(()=>{this.textContent='📋 Copia';this.className='btn-copy';},2000)">📋 Copia</button></div>` : ''}
