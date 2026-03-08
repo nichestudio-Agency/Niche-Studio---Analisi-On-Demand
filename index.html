@@ -1084,7 +1084,8 @@ function renderStats() {
 
 
 // ===== EXPORT FUNCTIONS =====
-const EXPORT_WEBHOOK = 'https://primary-production-82234.up.railway.app/webhook/export-presentation';
+const PDF_WEBHOOK = 'https://primary-production-82234.up.railway.app/webhook/lead-download-pdf';
+const PNG_WEBHOOK = 'https://primary-production-82234.up.railway.app/webhook/lead-genera-png';
 
 async function exportPresentation(type) {
   const username = currentUsername;
@@ -1095,45 +1096,27 @@ async function exportPresentation(type) {
   const loadingText = document.getElementById('exportLoadingText');
   if (btnPdf) btnPdf.setAttribute('disabled', true);
   if (btnJpeg) btnJpeg.setAttribute('disabled', true);
-  if (loadingEl) { loadingEl.classList.add('visible'); loadingText.textContent = 'Generazione in corso (30-60s)...'; }
-  try {
-    const res = await fetch(EXPORT_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username })
-    });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error || 'Errore export');
-    const url = type === 'pdf' ? data.pdf_url : data.jpeg_url;
-    window.open(url, '_blank');
-  } catch(err) {
-    alert('Errore: ' + err.message);
-  }
-  if (btnPdf) btnPdf.removeAttribute('disabled');
-  if (btnJpeg) btnJpeg.removeAttribute('disabled');
-  if (loadingEl) loadingEl.classList.remove('visible');
+  if (loadingEl) { loadingEl.classList.add('visible'); loadingText.textContent = 'Generazione in corso...'; }
+  const url = (type === 'pdf' ? PDF_WEBHOOK : PNG_WEBHOOK) + '?username=' + encodeURIComponent(username);
+  window.open(url, '_blank');
+  setTimeout(() => {
+    if (btnPdf) btnPdf.removeAttribute('disabled');
+    if (btnJpeg) btnJpeg.removeAttribute('disabled');
+    if (loadingEl) loadingEl.classList.remove('visible');
+  }, 2000);
 }
 
-async function drawerExport(type, username) {
+function drawerExport(type, username) {
   const loadingEl = document.getElementById('drawerExportLoading');
   const loadingText = document.getElementById('drawerExportText');
   document.querySelectorAll('#drawer .btn-export').forEach(b => b.setAttribute('disabled', true));
-  if (loadingEl) { loadingEl.classList.add('visible'); loadingText.textContent = 'Generazione (30-60s)...'; }
-  try {
-    const res = await fetch(EXPORT_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username })
-    });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error || 'Errore export');
-    const url = type === 'pdf' ? data.pdf_url : data.jpeg_url;
-    window.open(url, '_blank');
-  } catch(err) {
-    alert('Errore: ' + err.message);
-  }
-  document.querySelectorAll('#drawer .btn-export').forEach(b => b.removeAttribute('disabled'));
-  if (loadingEl) loadingEl.classList.remove('visible');
+  if (loadingEl) { loadingEl.classList.add('visible'); loadingText.textContent = 'Generazione in corso...'; }
+  const url = (type === 'pdf' ? PDF_WEBHOOK : PNG_WEBHOOK) + '?username=' + encodeURIComponent(username);
+  window.open(url, '_blank');
+  setTimeout(() => {
+    document.querySelectorAll('#drawer .btn-export').forEach(b => b.removeAttribute('disabled'));
+    if (loadingEl) loadingEl.classList.remove('visible');
+  }, 2000);
 }
 
 function showExportSection(show) {
