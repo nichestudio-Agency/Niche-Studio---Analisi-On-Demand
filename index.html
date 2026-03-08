@@ -623,7 +623,8 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 
 <script>
 const WEBHOOK_URL = 'https://primary-production-82234.up.railway.app/webhook/analizza-profilo';
-const SHEETS_API = 'https://primary-production-82234.up.railway.app/webhook/get-leads'; // opzionale
+const SHEETS_API = 'https://primary-production-82234.up.railway.app/webhook/get-leads';
+const CODA_API = 'https://primary-production-82234.up.railway.app/webhook/get-coda';
 
 let stepInterval, currentStep = 0, cachedData = null, currentUsername = '';
 let allLeads = [], filteredLeads = [];
