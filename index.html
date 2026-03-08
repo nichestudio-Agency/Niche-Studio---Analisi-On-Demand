@@ -104,6 +104,51 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .btn-primary:hover:not(:disabled) { background: #d43e32; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(233,80,67,0.3); }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
+/* BATCH QUEUE */
+.batch-card {
+  background: var(--navy-2);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+}
+.batch-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+.batch-head h3 { font-family: var(--font-display); font-size: 16px; font-weight: 800; letter-spacing: -0.4px; }
+.batch-head p { font-size: 13px; color: var(--gray); line-height: 1.6; margin-top: 4px; }
+.batch-badge {
+  font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--blue); background: var(--blue-dim);
+  border: 1px solid rgba(74,158,255,0.28); padding: 5px 10px; border-radius: 999px; white-space: nowrap;
+}
+.batch-textarea {
+  width: 100%; min-height: 150px; resize: vertical;
+  background: var(--navy-3); border: 1px solid var(--border); color: var(--white);
+  border-radius: 14px; padding: 14px 16px; font-family: var(--font-body);
+  font-size: 14px; line-height: 1.6; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.batch-textarea:focus { border-color: var(--red-border); box-shadow: 0 0 0 3px rgba(233,80,67,0.08); }
+.batch-textarea::placeholder { color: var(--gray); }
+.batch-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 14px; flex-wrap: wrap;
+}
+.batch-meta { font-size: 12px; color: var(--gray); }
+.batch-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.batch-note {
+  margin-top: 12px; font-size: 12px; color: var(--gray);
+  padding-top: 12px; border-top: 1px solid rgba(240,244,248,0.05);
+}
+.batch-feedback {
+  display: none; margin-top: 14px; border-radius: 14px; padding: 14px 16px;
+  font-size: 13px; line-height: 1.6;
+}
+.batch-feedback.visible { display: block; animation: fadeUp 0.25s ease; }
+.batch-feedback.success {
+  background: rgba(46,212,122,0.08); border: 1px solid rgba(46,212,122,0.22); color: var(--green);
+}
+.batch-feedback.error {
+  background: rgba(233,80,67,0.08); border: 1px solid rgba(233,80,67,0.22); color: var(--red);
+}
+
 /* EXISTS BANNER */
 .exists-banner { display: none; background: rgba(245,166,35,0.06); border: 1px solid rgba(245,166,35,0.2); border-radius: 18px; padding: 22px 26px; }
 .exists-banner.visible { display: block; animation: fadeUp 0.3s ease; }
@@ -380,6 +425,9 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
   nav .tab-btn { padding: 7px 12px; font-size: 12px; }
   .header-badge { display: none; }
   .profile-stats { gap: 14px; }
+  .batch-toolbar { align-items: stretch; }
+  .batch-actions { width: 100%; }
+  .batch-actions .btn-, .batch-actions .btn-outline { width: 100%; text-align: center; justify-content: center; }
 }
 </style>
 </head>
@@ -406,11 +454,45 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
           <div class="page-title">Analisi <span>Instagram</span><br>per PMI Siciliane</div>
           <div class="page-sub" style="margin-top:10px;">Inserisci un username per generare l'analisi completa con Vision AI</div>
         </div>
+
         <div class="search-wrapper">
           <span class="at">@</span>
           <input id="usernameInput" type="text" placeholder="nomeutente" autocomplete="off" spellcheck="false">
-          <button class="btn-primary" id="analyzeBtn" onclick="analyze()">Analizza</button>
+          <button class="btn-" id="analyzeBtn" onclick="analyze()">Analizza</button>
         </div>
+
+        <div class="batch-card">
+          <div class="batch-head">
+            <div>
+              <h3>Analisi lista profili</h3>
+              <p>Incolla uno username per riga. I profili verranno accodati e analizzati automaticamente, uno alla volta.</p>
+            </div>
+            <div class="batch-badge">Queue</div>
+          </div>
+
+          <textarea
+            id="batchAccounts"
+            class="batch-textarea"
+            placeholder="@cicciosburger&#10;lopresti.parrucchieri.alcamo&#10;account3"
+          ></textarea>
+
+          <div class="batch-toolbar">
+            <div class="batch-meta">
+              Gli account già analizzati vengono comunque reinseriti. Vengono saltati solo eventuali duplicati già in coda o in lavorazione.
+            </div>
+            <div class="batch-actions">
+              <button class="btn-outline" type="button" onclick="clearBatchAccounts()">Svuota</button>
+              <button class="btn-" id="queueBtn" type="button" onclick="queueAccounts()">Aggiungi alla coda</button>
+            </div>
+          </div>
+
+          <div class="batch-note">
+            Formato: uno username per riga. Puoi incollare anche nomi con <strong>@</strong>, verranno puliti automaticamente.
+          </div>
+
+          <div id="batchFeedback" class="batch-feedback"></div>
+        </div>
+
         <div class="exists-banner" id="existsBanner">
           <div class="exists-top">
             <div class="exists-icon">⚡</div>
@@ -424,6 +506,7 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
             <button class="btn-outline" onclick="forceReanalyze()">Nuova analisi</button>
           </div>
         </div>
+
         <div class="loading" id="loadingState">
           <div class="spinner"></div>
           <div class="loading-label">Analisi in corso...</div>
@@ -436,7 +519,9 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
             <div class="step-pill" id="step5">📊 Slides</div>
           </div>
         </div>
+
         <div class="error-box" id="errorBox"></div>
+
         <div class="results" id="resultsSection">
           <div class="profile-header">
             <div class="profile-info">
@@ -463,6 +548,7 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
             <div class="card-ttl"><div class="card-icon ic-blue">📋</div><h3>Sintesi Analisi</h3></div>
             <p class="summary-text" id="summaryText"></p>
           </div>
+
           <div class="grid-2">
             <div class="card">
               <div class="card-ttl"><div class="card-icon ic-red">⚠️</div><h3>Punti Deboli</h3></div>
@@ -473,15 +559,18 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
               <div class="point-list" id="quickWinsList"></div>
             </div>
           </div>
+
           <div class="dm-card" id="dmSection">
             <div class="card-ttl"><div class="card-icon ic-yellow">💬</div><h3>DM da Inviare</h3></div>
             <div class="dm-body" id="dmText"></div>
             <button class="btn-copy" id="copyBtn" onclick="copyDM()">📋 Copia DM</button>
           </div>
+
           <div class="pres-card" id="presentationCard">
             <div><h3>📊 Presentazione Generata</h3><p>Google Slides pronta — 8 slide personalizzate</p></div>
             <a id="presentationLink" href="#" target="_blank" class="btn-pres">Apri Presentazione →</a>
           </div>
+
           <div id="exportSection" style="display:none;margin-top:0;">
             <div class="card-full" style="margin-top:0;">
               <div class="card-ttl"><div class="card-icon ic-blue">&#11015;&#65039;</div><h3>Esporta Analisi</h3></div>
@@ -546,7 +635,8 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 
 <script>
 const WEBHOOK_URL = 'https://primary-production-82234.up.railway.app/webhook/analizza-profilo';
-const SHEETS_API = 'https://primary-production-82234.up.railway.app/webhook/get-leads'; // opzionale
+const SHEETS_API = 'https://primary-production-82234.up.railway.app/webhook/get-leads';
+const QUEUE_WEBHOOK_URL = 'https://primary-production-82234.up.railway.app/webhook/accoda-profili';
 
 let stepInterval, currentStep = 0, cachedData = null, currentUsername = '';
 let allLeads = [], filteredLeads = [];
@@ -611,7 +701,7 @@ async function analyze(forceNew = false) {
       document.getElementById('existsBanner').scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       renderResults(data, username, false);
-      allLeads = []; // reset cache leads
+      allLeads = [];
     }
   } catch(err) {
     clearInterval(stepInterval);
@@ -656,7 +746,6 @@ function renderResults(data, username, isCached) {
   document.getElementById('summaryText').textContent = data['Analisi GPT'] || '—';
   document.getElementById('weakPointsList').innerHTML = weakPoints.map((p,i)=>`<div class="point-item"><div class="point-num pn-red">${i+1}</div><div class="point-text">${p}</div></div>`).join('');
   document.getElementById('quickWinsList').innerHTML = quickWins.map((p,i)=>`<div class="point-item"><div class="point-num pn-green">${i+1}</div><div class="point-text">${p}</div></div>`).join('');
-  // Thumbnails from latest posts if available
   const posts = data._latestPosts || [];
   const thumbsRow = document.getElementById('thumbsRow');
   const thumbsSec = document.getElementById('thumbsSection');
@@ -695,25 +784,104 @@ function copyDM() {
 }
 document.getElementById('usernameInput').addEventListener('keydown', e => { if (e.key === 'Enter') analyze(); });
 
+// ===== QUEUE LISTA =====
+function normalizeBatchAccounts(raw) {
+  return raw
+    .split('\n')
+    .map(v => v.trim())
+    .map(v => v.replace(/^@+/, ''))
+    .filter(Boolean);
+}
+
+function clearBatchFeedback() {
+  const box = document.getElementById('batchFeedback');
+  box.className = 'batch-feedback';
+  box.textContent = '';
+}
+
+function showBatchFeedback(type, html) {
+  const box = document.getElementById('batchFeedback');
+  box.className = `batch-feedback visible ${type}`;
+  box.innerHTML = html;
+}
+
+function clearBatchAccounts() {
+  document.getElementById('batchAccounts').value = '';
+  clearBatchFeedback();
+}
+
+async function queueAccounts() {
+  const textarea = document.getElementById('batchAccounts');
+  const btn = document.getElementById('queueBtn');
+  const raw = textarea.value || '';
+  const accounts = normalizeBatchAccounts(raw);
+
+  clearBatchFeedback();
+
+  if (!accounts.length) {
+    showBatchFeedback('error', 'Inserisci almeno uno username valido, uno per riga.');
+    textarea.focus();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Invio...';
+
+  try {
+    const res = await fetch(QUEUE_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mode: 'batch',
+        accounts
+      })
+    });
+
+    let data = {};
+    try {
+      data = await res.json();
+    } catch (e) {}
+
+    if (!res.ok) {
+      throw new Error(data.error || `Errore ${res.status}`);
+    }
+
+    const added = Number(data.added || 0);
+    const skipped = Number(data.skipped || 0);
+    const skippedAccounts = Array.isArray(data.skipped_accounts) ? data.skipped_accounts : [];
+
+    let html = `<strong>${added}</strong> profili aggiunti in coda`;
+    if (skipped > 0) {
+      html += `<br><strong>${skipped}</strong> saltati perché già presenti in coda o in lavorazione`;
+      if (skippedAccounts.length) {
+        html += `<br><span style="color:var(--gray)">Saltati: ${skippedAccounts.join(', ')}</span>`;
+      }
+    }
+
+    showBatchFeedback('success', html);
+    textarea.value = '';
+  } catch (err) {
+    showBatchFeedback('error', `Errore: ${err.message}`);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Aggiungi alla coda';
+}
+
 // ===== LEAD TABLE =====
 async function loadLeads() {
   document.getElementById('leadTableContainer').innerHTML = '<div class="loading-rows"><div class="table-spinner"></div>Caricamento lead...</div>';
   try {
-    // Legge da Google Sheets via webhook dedicato
     const res = await fetch('https://sheets.googleapis.com/v4/spreadsheets/1pVCsQoP72tXmglZK6_HC-D2ccvk4-zpfsC4Es4NRo/values/Foglio1?key=PLACEHOLDER', { mode: 'no-cors' });
   } catch(e) {}
-  // Fallback: usa dati demo se non riesce a caricare
-  // In produzione metti qui il tuo endpoint n8n get-leads
   loadLeadsFallback();
 }
 
 function loadLeadsFallback() {
-  // Dati demo per mostrare la UI — sostituisci con fetch reale
   allLeads = [];
   renderLeadTable();
 }
 
-// Funzione reale — chiama un webhook n8n che restituisce i lead da Sheets
 async function fetchLeadsFromN8n() {
   try {
     const res = await fetch('https://primary-production-82234.up.railway.app/webhook/get-leads', {
@@ -791,11 +959,9 @@ async function markAsSent(e, idx) {
   const lead = filteredLeads[idx];
   if (!lead || lead.Status === 'Inviato') return;
   lead.Status = 'Inviato';
-  // Aggiorna anche in allLeads
   const ai = allLeads.findIndex(l => l.Username === lead.Username);
   if (ai >= 0) allLeads[ai].Status = 'Inviato';
   renderLeadTable();
-  // Chiama webhook n8n per aggiornare Sheets
   try {
     await fetch('https://primary-production-82234.up.railway.app/webhook/update-lead-status', {
       method: 'POST',
@@ -873,16 +1039,13 @@ function renderStats() {
   const convertiti = allLeads.filter(l => l.Convertito === 'Si' || l.Convertito === 'Sì').length;
   const risposti = allLeads.filter(l => l.Risposto === 'Si' || l.Risposto === 'Sì').length;
   const avgScore = allLeads.reduce((s,l) => s + (parseInt(l['Score (1-10)'])||0), 0) / (total||1);
-  // Categorie top
   const catCount = {};
   allLeads.forEach(l => { const c = l.Categoria||'Altro'; catCount[c] = (catCount[c]||0)+1; });
   const topCats = Object.entries(catCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
   const maxCat = topCats[0]?.[1] || 1;
-  // Score distribution
   const scoreDist = Array(10).fill(0);
   allLeads.forEach(l => { const s = (parseInt(l['Score (1-10)'])||1)-1; if(s>=0&&s<10) scoreDist[s]++; });
   const maxDist = Math.max(...scoreDist, 1);
-  // Città top
   const cityCount = {};
   allLeads.forEach(l => { const c = l['Città']||'n/d'; if(c!=='n/d') cityCount[c] = (cityCount[c]||0)+1; });
   const topCities = Object.entries(cityCount).sort((a,b)=>b[1]-a[1]).slice(0,4);
@@ -921,7 +1084,6 @@ function renderStats() {
     </div>`;
 }
 
-
 // ===== EXPORT FUNCTIONS =====
 const PDF_WEBHOOK = 'https://primary-production-82234.up.railway.app/webhook/lead-download-pdf';
 const PNG_WEBHOOK = 'https://primary-production-82234.up.railway.app/webhook/lead-genera-png';
@@ -948,7 +1110,6 @@ function exportPresentation(type) {
   try {
     const baseUrl = type === 'pdf' ? PDF_WEBHOOK : PNG_WEBHOOK;
     const url = `${baseUrl}?username=${encodeURIComponent(username)}`;
-
     window.open(url, '_blank');
   } catch (err) {
     alert('Errore: ' + err.message);
@@ -977,7 +1138,6 @@ function drawerExport(type, username) {
   try {
     const baseUrl = type === 'pdf' ? PDF_WEBHOOK : PNG_WEBHOOK;
     const url = `${baseUrl}?username=${encodeURIComponent(username)}`;
-
     window.open(url, '_blank');
   } catch (err) {
     alert('Errore: ' + err.message);
@@ -993,9 +1153,9 @@ function showExportSection(show) {
   const el = document.getElementById('exportSection');
   if (el) el.style.display = show ? 'block' : 'none';
 }
+
 // Load leads via n8n webhook
 loadLeads = fetchLeadsFromN8n;
 </script>
 </body>
 </html>
-
