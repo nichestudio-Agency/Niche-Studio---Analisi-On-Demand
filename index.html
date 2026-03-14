@@ -357,10 +357,10 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
       <span class="logo-name">Niche<em>Studio</em></span>
     </div>
     <nav>
-      <button class="tab-btn active" onclick="switchTab('analizza')">Analizza</button>
-      <button class="tab-btn" onclick="switchTab('lead')">Lead</button>
-      <button class="tab-btn" onclick="switchTab('stats')">Stats</button>
-      <button class="tab-btn" onclick="switchTab('coda')">Coda</button>
+      <button class="tab-btn active" data-tab="analizza">Analizza</button>
+      <button class="tab-btn" data-tab="lead">Lead</button>
+      <button class="tab-btn" data-tab="stats">Stats</button>
+      <button class="tab-btn" data-tab="coda">Coda</button>
     </nav>
     <div class="header-badge">Beta</div>
   </header>
@@ -613,8 +613,8 @@ function switchTab(name) {
   document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + name + "'")) b.classList.add('active');
+  document.querySelectorAll('.tab-btn[data-tab]').forEach(b => {
+    if (b.dataset.tab === name) b.classList.add('active');
   });
   if (name === 'lead' && allLeads.length === 0) fetchLeadsFromN8n();
   if (name === 'stats') { if (allLeads.length === 0) { fetchLeadsFromN8n().then(() => renderStats()); } else { renderStats(); } }
@@ -1243,7 +1243,11 @@ function stopCodaPolling() {
   if (dot) { dot.classList.add('off'); document.getElementById('codaPollingLabel').textContent = 'Polling in pausa'; }
 }
 
-// Init
+// Init — tab navigation via event delegation (avoids "not defined" errors)
+document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
 fetchLeadsFromN8n();
 </script>
 </body>
