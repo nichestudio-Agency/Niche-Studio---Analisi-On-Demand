@@ -1066,7 +1066,7 @@ function openDrawer(idx) {
     <div class="drawer-action-row">
       <a href="${lead['Profilo URL']||'https://instagram.com/'+username}" target="_blank" class="btn-outline">Instagram ↗</a>
       <button class="btn-action-blue" onclick="reanalyzeLead(null,'${username}')">↻ Rianalizza</button>
-      <button class="btn-action-red" onclick="confirmDeleteLead(null,'${username}','${lead[\'Data Lead\']}')">✕ Elimina</button>
+      <button class="btn-action-red" onclick="confirmDeleteLead(null, this.dataset.u, this.dataset.d)" data-u="${username}" data-d="${lead['Data Lead']}">✕ Elimina</button>
     </div>`;
   document.getElementById('drawerOverlay').classList.add('open');
   document.getElementById('drawer').classList.add('open');
@@ -1116,7 +1116,7 @@ function renderStats() {
         <div class="funnel">
           <div class="funnel-row"><div class="funnel-name">Analizzati</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:var(--navy-3);border:1px solid var(--border);"></div><span class="funnel-num">${total}</span></div></div>
           <div class="funnel-row"><div class="funnel-name">Da inviare</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(daInviare/total*100).toFixed(0):0}%;background:var(--green);opacity:0.7;"></div><span class="funnel-num" style="color:var(--green)">${daInviare}</span></div></div>
-          <div class="funnel-row"><div class="funtered-name">Inviati</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(inviati/total*100).toFixed(0):0}%;background:var(--blue);opacity:0.7;"></div><span class="funnel-num" style="color:var(--blue)">${inviati}</span></div></div>
+          <div class="funnel-row"><div class="funnel-name">Inviati</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(inviati/total*100).toFixed(0):0}%;background:var(--blue);opacity:0.7;"></div><span class="funnel-num" style="color:var(--blue)">${inviati}</span></div></div>
           <div class="funnel-row"><div class="funnel-name">Risposti</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(risposti/total*100).toFixed(0):0}%;background:var(--yellow);opacity:0.7;"></div><span class="funnel-num" style="color:var(--yellow)">${risposti}</span></div></div>
           <div class="funnel-row"><div class="funnel-name">Convertiti</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:${total?(convertiti/total*100).toFixed(0):0}%;background:var(--red);"></div><span class="funnel-num" style="color:var(--red)">${convertiti}</span></div></div>
         </div>
