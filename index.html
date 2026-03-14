@@ -204,9 +204,10 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .tag-sent { background: var(--blue-dim); color: var(--blue); }
 .td-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 .td-dot-green { background: var(--green); } .td-dot-gray { background: var(--gray); } .td-dot-blue { background: var(--blue); }
-.btn-mark { background: var(--gray-2); border: 1px solid var(--border); color: var(--gray); border-radius: 8px; padding: 6px 12px; font-family: var(--font-display); font-size: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.btn-mark { background: var(--gray-2); border: 1px solid var(--border); color: var(--gray); border-radius: 8px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
 .btn-mark:hover { background: var(--blue-dim); border-color: rgba(74,158,255,0.3); color: var(--blue); }
-.btn-mark.sent { background: var(--blue-dim); border-color: rgba(74,158,255,0.3); color: var(--blue); cursor: default; }
+.btn-mark.sent { background: var(--blue-dim); border-color: rgba(74,158,255,0.3); color: var(--blue); }
+.btn-mark.sent:hover { cursor: default; background: var(--blue-dim); }
 .btn-mark.danger:hover { background: var(--red-dim); border-color: var(--red-border); color: var(--red); }
 .btn-mark.reanalyze:hover { background: var(--success-dim); border-color: rgba(46,212,122,0.3); color: var(--green); }
 .empty-state { text-align: center; padding: 60px 20px; color: var(--gray); }
@@ -214,7 +215,8 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
 .empty-state p { font-size: 14px; }
 .loading-rows { text-align: center; padding: 40px; color: var(--gray); font-size: 13px; }
 .table-spinner { width: 32px; height: 32px; border: 2px solid rgba(240,244,248,0.1); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
-.td-actions { display: flex; gap: 5px; align-items: center; }
+.td-actions { display: flex; gap: 5px; align-items: center; flex-wrap: nowrap; }
+.lead-table td:last-child { white-space: nowrap; width: 110px; }
 
 /* TOGGLE BUTTONS per Risposto/Convertito nel drawer */
 .toggle-row { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -908,9 +910,9 @@ function renderLeadTable() {
       <td style="color:var(--gray);font-size:12px;">${date}</td>
       <td onclick="event.stopPropagation()">
         <div class="td-actions">
-          <button class="btn-mark ${isSent?'sent':''}" onclick="markAsSent(event,${i})">${isSent?'✓ Inviato':'Segna inviato'}</button>
+          <button class="btn-mark ${isSent?'sent':''}" title="${isSent?'Già inviato':'Segna come inviato'}" onclick="markAsSent(event,${i})">${isSent?'✓':'→'}</button>
           <button class="btn-mark reanalyze" title="Rianalizza" onclick="reanalyzeLead(event,'${l.Username}')">↻</button>
-          <button class="btn-mark danger" title="Elimina" onclick="confirmDeleteLead(event,'${l.Username}')">✕</button>
+          <button class="btn-mark danger" title="Elimina" onclick="confirmDeleteLead(event,'${l.Username}','${l['Data Lead']}')">✕</button>
         </div>
       </td>
     </tr>`;
@@ -965,23 +967,28 @@ function toggleField(username, field) {
 }
 
 // ===== DELETE =====
-function confirmDeleteLead(e, username) {
+function confirmDeleteLead(e, username, dataLead) {
   if (e) e.stopPropagation();
   openModal(
     'Elimina analisi',
     `Vuoi eliminare definitivamente l'analisi di @${username}? L'operazione non è reversibile.`,
-    () => deleteLead(username)
+    () => deleteLead(username, dataLead)
   );
 }
-async function deleteLead(username) {
-  allLeads = allLeads.filter(l => l.Username !== username);
+async function deleteLead(username, dataLead) {
+  // Rimuove solo la riga con username + data univoca
+  if (dataLead) {
+    allLeads = allLeads.filter(l => !(l.Username === username && l['Data Lead'] === dataLead));
+  } else {
+    allLeads = allLeads.filter(l => l.Username !== username);
+  }
   filterLeads();
   closeDrawer();
-  showToast(`@${username} eliminato`, 'error');
+  showToast(`Analisi di @${username} eliminata`, 'error');
   try {
     await fetch(DELETE_WEBHOOK, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username })
+      body: JSON.stringify({ username, data_lead: dataLead })
     });
   } catch(e) {}
 }
@@ -1059,7 +1066,7 @@ function openDrawer(idx) {
     <div class="drawer-action-row">
       <a href="${lead['Profilo URL']||'https://instagram.com/'+username}" target="_blank" class="btn-outline">Instagram ↗</a>
       <button class="btn-action-blue" onclick="reanalyzeLead(null,'${username}')">↻ Rianalizza</button>
-      <button class="btn-action-red" onclick="confirmDeleteLead(null,'${username}')">✕ Elimina</button>
+      <button class="btn-action-red" onclick="confirmDeleteLead(null,'${username}','${lead[\'Data Lead\']}')">✕ Elimina</button>
     </div>`;
   document.getElementById('drawerOverlay').classList.add('open');
   document.getElementById('drawer').classList.add('open');
