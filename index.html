@@ -357,10 +357,10 @@ main { flex: 1; padding: 40px 32px; max-width: 1100px; margin: 0 auto; width: 10
       <span class="logo-name">Niche<em>Studio</em></span>
     </div>
     <nav>
-      <button class="tab-btn active" data-tab="analizza">Analizza</button>
-      <button class="tab-btn" data-tab="lead">Lead</button>
-      <button class="tab-btn" data-tab="stats">Stats</button>
-      <button class="tab-btn" data-tab="coda">Coda</button>
+      <button class="tab-btn active" data-tab="analizza" onclick="switchTab('analizza')">Analizza</button>
+      <button class="tab-btn" data-tab="lead" onclick="switchTab('lead')">Lead</button>
+      <button class="tab-btn" data-tab="stats" onclick="switchTab('stats')">Stats</button>
+      <button class="tab-btn" data-tab="coda" onclick="switchTab('coda')">Coda</button>
     </nav>
     <div class="header-badge">Beta</div>
   </header>
@@ -1243,11 +1243,7 @@ function stopCodaPolling() {
   if (dot) { dot.classList.add('off'); document.getElementById('codaPollingLabel').textContent = 'Polling in pausa'; }
 }
 
-// Init — tab navigation via event delegation (avoids "not defined" errors)
-document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
-  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
-});
-
+// Init
 fetchLeadsFromN8n();
 </script>
 </body>
